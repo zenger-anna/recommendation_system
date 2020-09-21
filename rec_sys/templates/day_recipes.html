@@ -1,0 +1,20 @@
+{% extends 'navbar.html' %}
+{% block content %}
+
+    <br>
+    <h1 class="display-4">Рецепты дня</h1>
+    <br>
+    <p class="lead">🥰 Этот набор рецептов подобран специально для вас!</p>
+    <p class="lead">
+        Каждый день он будет обновляться в соответствии с вашими вкусовыми предпочтениями.
+        Оценивайте, просматривайте и добавляйте в избранное рецепты, чтобы сделать рецомендации более точными.
+    </p>
+    {% for recipe in recipes %}
+        <a href="{% url 'rec_sys:view_recipe' recipe.id %}" class="list-group-item d-flex justify-content-between align-items-center list-group-item-action">
+            {{ recipe.title }}
+            <span class="badge badge-primary badge-pill">{{ recipe.mean_rating }}</span>
+        </a>
+    {% endfor %}
+    <br>
+
+{% endblock %}

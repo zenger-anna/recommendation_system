@@ -1,0 +1,109 @@
+{% extends 'navbar.html' %}
+{% block content %}
+
+    <div class="container">
+        <br>
+        <h1 class="display-4">{{ recipe.title }}</h1>
+        <br>
+        {% if user.is_authenticated %}
+            <div class="text-right mb-3">
+                <form action="{% url 'rec_sys:view_recipe' recipe.id %}" method="post">
+                    {% csrf_token %}
+                    <div class="btn-group mr-2" role="group" aria-label="First group">
+                        {% if rated and recipe_rating == 1 %}
+                            <button type="action" class="btn btn-danger" name="rating_1" disabled>1</button>
+                        {% else %}
+                            <button type="action" class="btn btn-outline-secondary" name="rating_1">1</button>
+                        {% endif %}
+                        {% if rated and recipe_rating == 2 %}
+                            <button type="action" class="btn btn-danger" name="rating_2" disabled>2</button>
+                        {% else %}
+                            <button type="action" class="btn btn-outline-secondary" name="rating_2">2</button>
+                        {% endif %}
+                        {% if rated and recipe_rating == 3 %}
+                            <button type="action" class="btn btn-warning" name="rating_3" disabled>3</button>
+                        {% else %}
+                            <button type="action" class="btn btn-outline-secondary" name="rating_3">3</button>
+                        {% endif %}
+                        {% if rated and recipe_rating == 4 %}
+                            <button type="action" class="btn btn-success" name="rating_4" disabled>4</button>
+                        {% else %}
+                            <button type="action" class="btn btn-outline-secondary" name="rating_4">4</button>
+                        {% endif %}
+                        {% if rated and recipe_rating == 5 %}
+                            <button type="action" class="btn btn-success" name="rating_5" disabled>5</button>
+                        {% else %}
+                            <button type="action" class="btn btn-outline-secondary" name="rating_5">5</button>
+                        {% endif %}
+                    </div>
+                    {% if added %}
+                        <button type="action" class="btn btn-outline-secondary" name="del_recipe">Удалить из избранного</button>
+                    {% else %}
+                        <button type="action" class="btn btn-outline-secondary" name="add_recipe">Добавить в избранное</button>
+                    {% endif %}
+                </form>
+            </div>
+        {% endif %}
+        <br>
+        <p class="lead">{{ recipe.description }}</p>
+        <br>
+
+        <div class="accordion" id="accordionExample">
+            <div class="card">
+                <div class="card-header" id="headingOne">
+                    <a class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        <div class="lead">Ингредиенты</div>
+                    </a>
+                </div>
+
+                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                    <div class="card-body">
+                        <ul type="circle">
+                            {% for ingredient in recipe.ingredients %}
+                                <li class="lead">{{ ingredient }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingTwo">
+                    <a class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        <div class="lead">Способ приготовления</div>
+                    </a>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                    <div class="card-body">
+                        <ul type="circle">
+                            {% for direction in recipe.directions %}
+                                <li class="lead">{{ direction }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {% if user.is_authenticated %}
+        <br>
+        <h1 class="display-4">Вам также может понравиться</h1>
+        <br>
+
+        <div class="list-group">
+            {% for recipe in similar_recipes %}
+                <a href="{% url 'rec_sys:view_recipe' recipe.id %}" class="list-group-item d-flex justify-content-between align-items-center list-group-item-action">
+                {{ recipe.title }}
+                <span class="badge badge-primary badge-pill">{{ recipe.mean_rating }}</span>
+                </a>
+            {% endfor %}
+            <br>
+        </div>
+    {% else %}
+        <br>
+        <p class="lead">Пожалуйста, зарегистрируйтесь или войдите для получения рекомендаций.</p>
+        <br>
+    {% endif %}
+
+    </div>
+
+{% endblock %}

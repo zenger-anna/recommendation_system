@@ -1,0 +1,86 @@
+{% extends 'navbar.html' %}
+{% block content %}
+
+    </br>
+    <div class="container">
+        <h1 class="display-4">Профиль</h1>
+        <br>
+        <ul class="nav nav-tabs" id="account_tab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active text-dark" id="all_info" href="#all_info_content" role="tab" data-toggle="tab" aria-controls="all_info_content">
+                    Информация
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" id="favourites" href="#favourites_content" role="tab" data-toggle="tab" aria-controls="favourites_content">
+                    Избранное
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" id="history" href="#history_content" role="tab" data-toggle="tab" aria-controls="history_content">
+                    История
+                </a>
+            </li>
+        </ul>
+
+        </br>
+
+        <div class="tab-content">
+            <div class="tab-pane active" id="all_info_content" role="tabpanel" aria-labelledby="all_info">
+                <div class="form-group row">
+                    <label for="username" class="col-sm-2 col-form-label">Логин</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="username" value="{{ user.username }}" disabled>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="first_name" class="col-sm-2 col-form-label">Имя</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="first_name" placeholder="not set" value="{{ user.first_name }}" disabled>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="last_name" class="col-sm-2 col-form-label">Фамилия</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="last_name" placeholder="not set" value="{{ user.last_name }}" disabled>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="email" class="col-sm-2 col-form-label">Почта</label>
+                    <div class="col-sm-10">
+                        <input type="email" class="form-control" id="email" placeholder="not set" value="{{ user.email }}" disabled>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="favourites_content" role="tabpanel" aria-labelledby="favourites">
+                <p class="lead">Здесь рецепты, которые вам понравились 😋</p>
+                {% for recipe in favourite_recipes %}
+                    <a href="{% url 'rec_sys:view_recipe' recipe.id %}" class="list-group-item d-flex justify-content-between align-items-center list-group-item-action">
+                        {{ recipe.title }}
+                        <span class="badge badge-primary badge-pill">{{ recipe.mean_rating }}</span>
+                    </a>
+                {% endfor %}
+                <br>
+            </div>
+            <div class="tab-pane" id="history_content" role="tabpanel" aria-labelledby="history">
+                <p class="lead">Здесь рецепты, которые вы просматривали 🧐</p>
+                {% for recipe in history_recipes %}
+                    <a href="{% url 'rec_sys:view_recipe' recipe.id %}" class="list-group-item d-flex justify-content-between align-items-center list-group-item-action">
+                        {{ recipe.title }}
+                        <span class="badge badge-primary badge-pill">{{ recipe.mean_rating }}</span>
+                    </a>
+                {% endfor %}
+                <br>
+            </div>
+
+        </div>
+
+        <script>
+            $('#search_tab a').on('click', function (e) {
+                e.preventDefault()
+                $(this).tab('show')
+            })
+        </script>
+    </div>
+
+{% endblock %}

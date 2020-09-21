@@ -1,0 +1,51 @@
+{% extends 'index.html' %}
+
+{% block header %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+    {% load static %}
+    <img src="{% static "freshly-cook-meal-svgrepo-com.svg" %}" width="35" height="35" class="d-inline-block align-top mr-sm-2" alt="" loading="lazy">
+  <a class="navbar-brand" href="{% url 'rec_sys:search' %}">
+      ZENGER | COOK
+  </a>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+              <a class="nav-link" href="{% url 'rec_sys:search' %}">Поиск</a>
+          </li>
+          <li class="nav-item active">
+            {% if user.is_authenticated %}
+              <div class="nav-item active">
+                  <a class="nav-link text-dark" href="{% url 'rec_sys:day_recipes' %}">Рецепты дня</a>
+              </div>
+            {% endif %}
+          </li>
+          <li class="nav-item active">
+              <a class="nav-link" href="{% url 'rec_sys:about' %}">О проекте</a>
+          </li>
+      </ul>
+        {% if user.is_authenticated %}
+          <div class="nav-item active">
+              <a class="nav-link text-dark" href="{% url 'rec_sys:account' %}">Профиль</a>
+          </div>
+        {% endif %}
+  {% if user.is_authenticated %}
+      <div class="btn-group" role="group">
+          <form action="{% url 'rec_sys:search' %}" method="get">
+              <button type="action" class="btn btn-outline-secondary mr-sm-2" name="log_out_nav_but">Выйти</button>
+          </form>
+      </div>
+  {% else %}
+      <form action="{% url 'rec_sys:sign_in' %}" method="get">
+          <button type="action" class="btn btn-outline-secondary mr-sm-2" name="sign_in_nav_but">Зарегистрироваться</button>
+      </form>
+      <form action="{% url 'rec_sys:log_in' %}" method="get">
+          <button type="action" class="btn btn-outline-secondary my-10 my-sm-0" name="log_in_nav_but">Войти</button>
+      </form>
+  {% endif %}
+  </div>
+</nav>
+
+
+{% endblock %}

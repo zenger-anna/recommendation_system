@@ -1,0 +1,63 @@
+{% extends 'navbar.html' %}
+{% block content %}
+
+    </br>
+        <div align="center">
+            <h1 class="display-4">ZENGER | COOK</h1>
+        </div>
+    </br>
+    <form action="{% url 'rec_sys:search' %}" method="get">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Введите название рецепта..." aria-describedby="button-addon2" name="search_input" value="{{ search_input }}">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="action" name="search_by_name">Поиск</button>
+            </div>
+        </div>
+    </form>
+    <div class="list-group">
+        {% for recipe in page.object_list %}
+            <a href="{% url 'rec_sys:view_recipe' recipe.id %}" class="list-group-item d-flex justify-content-between align-items-center list-group-item-action">
+                {{ recipe.title }}
+                <span class="badge badge-primary badge-pill">{{ recipe.mean_rating }}</span>
+            </a>
+        {% endfor %}
+        <br>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <li class="page-item">
+                    <a class="page-link text-dark" href="{{ base_url }}page=1" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+
+                {% for n in page.paginator.page_range %}
+                    {% if page.number == n %}
+                        <li class="page-item active">
+                            <a class="page-link" href="{{ base_url }}page={{ n }}">{{ n }}</a>
+                        </li>
+                    {% elif n > page.number|add:-3 and n < page.number|add:3 %}
+                        <li class="page-item">
+                            <a class="page-link text-dark" href="{{ base_url }}page={{ n }}">{{ n }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+
+                <li class="page-item">
+                    <a class="page-link text-dark" href="{{ base_url }}page={{ page.paginator.num_pages }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <br>
+    </div>
+
+    <script>
+        $('#search_tab a').on('click', function (e) {
+            e.preventDefault()
+            $(this).tab('show')
+        })
+    </script>
+
+{% endblock %}

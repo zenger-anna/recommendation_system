@@ -1,0 +1,65 @@
+{% extends 'navbar.html' %}
+{% block content %}
+
+    </br>
+    <div>
+        <div class="container">
+            <h1 class="display-4">О проекте ZENGER | COOK</h1>
+            <br>
+            <p class="lead">Добро пожаловать!</p>
+            <p class="lead">
+                <b>ZENGER | COOK</b> - это источник большого числа самый вкусных, полезных и интересных рецептов.
+                Здесь вы можете найти идеальные для вас рецепты, собрать свою подборку рецептов и получить рекомендации
+                в соответствии с вашими вкусовыми предпочтениями.
+            </p>
+            <h1 class="display-4">Об авторе</h1>
+            <br>
+            <ul class="list-unstyled">
+                <li class="media">
+                    {% load static %}
+                    <img src="{% static "vanna.jpg" %}" width="300" alt="Zenger Anna" align="left" vspace="5" hspace="30">
+                    <div class="media-body lead">
+                        <p>Автор проекта <b>ZENGER | COOK</b></p>
+                        <p>Студентка 4 курса</p>
+                        <p>МГТУ им. Н.Э. Баумана</p>
+                        <p>Группы ИУ5-81Б</p>
+                        <p>Зенгер Анна Сергеевна</p>
+                        <p>Контакты: azenger98@gmail.com</p>
+                        <p style="text-indent: 4.4em">+7 (916) 245-93-48</p>
+                    </div>
+                </li>
+            </ul>
+            <h1 class="display-4">О функционале</h1>
+            <br>
+            <p class="lead">
+                Давайте посмотрим, что вы можете сделать на этом сайте. Некоторые из описанных ниже функций
+                доступны только зарегистрированным пользователям.
+            </p>
+            <ul type="circle">
+                <li class="lead">Для начала вы можете воспользоваться поиском, чтобы найти необходимый рецепт.</li><br>
+                {% load static %}
+                    <img src="{% static "search.gif" %}" alt="My image" width="700"><br><br><br>
+                <li class="lead">Для начала вы можете воспользоваться поиском, чтобы найти необходимый рецепт.</li><br>
+                {% load static %}
+                    <img src="{% static "add-delete.gif" %}" alt="My image" width="700"><br><br><br>
+                <li class="lead">Вы можете поставить оценку рецепту, чтобы другие пользователи могли выбрать лучшие рецепты.</li><br>
+                {% load static %}
+                    <img src="{% static "rating.gif" %}" alt="My image" width="700"><br><br><br>
+                <li class="lead">Разумеется вы можете посмотреть игредиенты и способ приготовления рецепта.</li><br>
+                {% load static %}
+                    <img src="{% static "ingredients.gif" %}" alt="My image" width="700"><br><br><br>
+                <li class="lead">Вы также можете посмотреть рекомендуемые рецепты, если вы хотите попробовать
+                    что-то новое, но не слишком необычное.</li><br>
+                {% load static %}
+                    <img src="{% static "similar.gif" %}" alt="My image" width="700"><br><br><br>
+                <li class="lead">Наконец, вы можете зайти в свой аккаунт, чтобы посмотреть там данные о вашем профиле,
+                    список понравившихся вам рецептов и историю просмотров.
+                </li><br>
+                {% load static %}
+                    <img src="{% static "account.gif" %}" alt="My image" width="700"><br><br>
+            </ul>
+            <p class="display-4">Приятного  использования и, конечно, приятного аппетита!</p><br>
+        </div>
+    </div>
+
+{% endblock %}
